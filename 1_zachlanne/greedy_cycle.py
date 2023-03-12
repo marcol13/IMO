@@ -48,12 +48,12 @@ def find_the_best_vertex(start: int, end: int, matrix: np.ndarray, free_vertices
     return best_vertex
 
 
-def extend_cycle(cycle: np.ndarray, free_vertices: np.ndarray, matrix: np.ndarray):
+def extend_cycle(cycle: np.ndarray, matrix: np.ndarray, free_vertices: np.ndarray):
     """
     Add vertex which increase size of the cycle by the smallest amount.
     :param cycle: list with the vertices in the cycle.
-    :param free_vertices: list with vertices which are not in a cycle.
     :param matrix: matrix with lengths between vertices.
+    :param free_vertices: list with vertices which are not in a cycle.
     :return: extended cycle.
     """
     best_length = np.inf
@@ -73,7 +73,7 @@ def extend_cycle(cycle: np.ndarray, free_vertices: np.ndarray, matrix: np.ndarra
 
 def greedy_cycles(file_path: str, draw: bool = False):
     """
-    Find solution for double TSP using greedy cycles aproach.
+    Find solution for double TSP using greedy cycles approach.
     :param file_path: path to the problem instance.
     :param draw: pass True if results should be drawn, False otherwise.
     """
@@ -91,15 +91,14 @@ def greedy_cycles(file_path: str, draw: bool = False):
     cycle_b = init_cycle(start_ver_b, matrix, free_vertices)
 
     while sum(free_vertices) > 0:
-        cycle_a = extend_cycle(cycle_a, free_vertices, matrix)
-        cycle_b = extend_cycle(cycle_b, free_vertices, matrix)
+        cycle_a = extend_cycle(cycle_a, matrix, free_vertices)
+        cycle_b = extend_cycle(cycle_b, matrix, free_vertices)
 
     print(f"Length of the cycle A: {calculate_cycle_length(matrix, cycle_a)}")
     print(f"Length of the cycle B: {calculate_cycle_length(matrix, cycle_b)}")      
     
     if draw:
         draw_cycles([cycle_a, cycle_b], vertices)
-
 
 
 if __name__ == "__main__":
