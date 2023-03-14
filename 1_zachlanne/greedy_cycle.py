@@ -1,11 +1,7 @@
 import random
 import numpy as np
 
-from matrix import parse_file, create_distance_matrix
 from helpers import draw_cycles, calculate_cycle_length
-
-KROA_PATH = "1_zachlanne/data/kroa100.tsp"
-KROB_PATH = "1_zachlanne/data/krob100.tsp"
 
 
 def init_cycle(index: int, matrix: np.ndarray, free_vertices: np.ndarray):
@@ -71,19 +67,20 @@ def extend_cycle(cycle: np.ndarray, matrix: np.ndarray, free_vertices: np.ndarra
     return best_cycle
 
 
-def greedy_cycles(file_path: str, draw: bool = False):
+def greedy_cycles(matrix: np.ndarray, vertices: np.ndarray, start_ver: int = None, draw: bool = False):
     """
     Find solution for double TSP using greedy cycles approach.
-    :param file_path: path to the problem instance.
+    :param matrix: matrix with lengths between vertices.
+    :param vertices: array with the coordinates of vertices.
     :param draw: pass True if results should be drawn, False otherwise.
     """
-    vertices = parse_file(file_path)
-    matrix = create_distance_matrix(vertices)
-    free_vertices = [1] * 100
-
-    start_ver_a = random.randint(0, 100)
+    if start_ver is None:
+        start_ver_a = random.randint(0, 100)
+    else:
+        start_ver_a = start_ver
     start_ver_b = np.argmax(matrix[:, start_ver_a])
-
+    
+    free_vertices = [1] * 100
     free_vertices[start_ver_a] = 0
     free_vertices[start_ver_b] = 0
     
@@ -94,13 +91,10 @@ def greedy_cycles(file_path: str, draw: bool = False):
         cycle_a = extend_cycle(cycle_a, matrix, free_vertices)
         cycle_b = extend_cycle(cycle_b, matrix, free_vertices)
 
-    print(f"Length of the cycle A: {calculate_cycle_length(matrix, cycle_a)}")
-    print(f"Length of the cycle B: {calculate_cycle_length(matrix, cycle_b)}")      
+    length_a = calculate_cycle_length(matrix, cycle_a)
+    length_b = calculate_cycle_length(matrix, cycle_b)    
     
     if draw:
         draw_cycles([cycle_a, cycle_b], vertices)
 
-
-if __name__ == "__main__":
-    greedy_cycles(KROB_PATH, True)
-
+    return length_a + length_b
