@@ -71,6 +71,7 @@ def greedy_nearest_neighbour(matrix: np.ndarray, vertices: np.ndarray, start_ver
     Find solution for double TSP using greedy nearest neighbour approach.
     :param matrix: matrix with lengths between vertices.
     :param vertices: array with the coordinates of vertices.
+    :param start_ver: optional argument, if int is passed it will be used as index of the first vertex.
     :param draw: pass True if results should be drawn, False otherwise.
     """
     if start_ver is None:

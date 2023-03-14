@@ -72,6 +72,7 @@ def greedy_cycles(matrix: np.ndarray, vertices: np.ndarray, start_ver: int = Non
     Find solution for double TSP using greedy cycles approach.
     :param matrix: matrix with lengths between vertices.
     :param vertices: array with the coordinates of vertices.
+    :param start_ver: optional argument, if int is passed it will be used as index of the first vertex.
     :param draw: pass True if results should be drawn, False otherwise.
     """
     if start_ver is None:
