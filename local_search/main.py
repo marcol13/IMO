@@ -5,6 +5,8 @@ from greedy_regret import greedy_regret
 from matrix import parse_file, create_distance_matrix
 from helpers import calculate_path_length, draw_cycles
 from steepest_search import steepest_search
+from greedy_search import greedy_search
+from tqdm import tqdm
 
 
 KROA_PATH = "./local_search/data/kroa100.tsp"
@@ -18,13 +20,12 @@ if __name__ == "__main__":
 
     # TODO add runs for random search and unchanged solution
 
-    # TODO add greedy search
-    for local_search in [steepest_search]:
+    for local_search in [steepest_search, greedy_search]:
         for inside_swap in ["vertices", "edges"]:
             times = []
             lengths = []
 
-            for i in range(100):
+            for i in tqdm(range(100)):
                 cycle_a, cycle_b = greedy_regret(matrix, vertices_kroa, i)
                 cycle_a, cycle_b = cycle_a[:-1], cycle_b[:-1]
 
