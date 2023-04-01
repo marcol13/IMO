@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import namedtuple
+
+Improvement = namedtuple("Improvement", ["change", "args", "function"])
 
 
 def calculate_path_length(matrix: np.ndarray, path: np.ndarray) -> float:

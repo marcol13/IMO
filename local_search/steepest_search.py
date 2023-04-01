@@ -1,10 +1,6 @@
 import numpy as np
 import swap_operations as so
-from collections import namedtuple
-
-from helpers import calculate_path_length
-
-Improvement = namedtuple("Improvement", ["change", "args", "function"])
+from helpers import calculate_path_length, Improvement
 
 
 def steepest_search(matrix, cycle_a, cycle_b, inside_swap):
