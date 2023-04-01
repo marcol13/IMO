@@ -1,14 +1,18 @@
 import numpy as np
 import swap_operations as so
-from helpers import calculate_path_length, Improvement
+from helpers import Improvement
 
 
 def steepest_search(matrix, cycle_a, cycle_b, inside_swap):
 
     if inside_swap == "vertices":
         swap_inside = so.swap_vertices_inside_cycle
-    else:
+        distance_cal = so.calculate_distance_diff_for_swap_inside_cycle
+    elif inside_swap == "edges":
         swap_inside = so.swap_edges_inside_cycle
+        distance_cal = so.calculate_distance_diff_for_swap_edges
+    else:
+        raise ValueError("Inside swap should have value: vertices or edges!")
     
     def between_cycles():
         pairs = so.get_pairs_for_swap_between_cycles(cycle_a, cycle_b)
@@ -24,7 +28,7 @@ def steepest_search(matrix, cycle_a, cycle_b, inside_swap):
         
     def check_cycle(cycle):
         pairs = so.get_pairs_for_swap_inside_cycle(cycle)
-        changes = np.array([so.calculate_distance_diff_for_swap_inside_cycle(matrix, cycle, pairs[i][0], pairs[i][1]) for i in range(len(pairs))])
+        changes = np.array([distance_cal(matrix, cycle, pairs[i][0], pairs[i][1]) for i in range(len(pairs))])
         if np.min(changes) >= 0:
             return Improvement(0, None, None)
         vertex_a, vertex_b = pairs[np.argmin(changes)]
@@ -36,8 +40,6 @@ def steepest_search(matrix, cycle_a, cycle_b, inside_swap):
         if between.change >= 0 and inside.change >= 0:
             break
         if between.change < inside.change:
-            print(f"Between: {calculate_path_length(matrix, cycle_a)}, {calculate_path_length(matrix, cycle_b)}, {between.change}")
             between.function(*between.args)
         else:
-            print(f"Inside: {calculate_path_length(matrix, cycle_a)}, {calculate_path_length(matrix, cycle_b)}, {inside.change}")
             inside.function(*inside.args)
