@@ -2,14 +2,13 @@ from itertools import combinations
 import numpy as np
 
 
-
 def swap_vertices_between_cycles(cycle_a, cycle_b, vertex_a, vertex_b):
-    index_a, index_b = np.where(cycle_a == vertex_a)[0], np.where(cycle_b == vertex_b)[0]
+    index_a, index_b = np.where(cycle_a == vertex_a)[0][0], np.where(cycle_b == vertex_b)[0][0]
     cycle_a[index_a], cycle_b[index_b] = cycle_b[index_b], cycle_a[index_a]
 
 
 def swap_vertices_inside_cycle(cycle, vertex_a, vertex_b):
-    index_a, index_b = np.where(cycle == vertex_a)[0], np.where(cycle == vertex_b)[0]
+    index_a, index_b = np.where(cycle == vertex_a)[0][0], np.where(cycle == vertex_b)[0][0]
     cycle[index_a], cycle[index_b] = cycle[index_b], cycle[index_a]
 
 
@@ -50,11 +49,11 @@ def calculate_distance_diff_for_swap_inside_cycle(matrix, cycle, vertex_a: int, 
     cycle = list(cycle)
     index_a, index_b = cycle.index(vertex_a), cycle.index(vertex_b)
     # edge case explained in images/obok.png
-    if abs(index_a - index_b) == 1:
+    if index_b - index_a == 1:
         change += matrix[vertex_b][cycle[index_a - 1]] + matrix[vertex_a][cycle[(index_b + 1) % len(cycle)]]
-        change -= matrix[vertex_b][cycle[index_a - 1]] + matrix[vertex_a][cycle[(index_b + 1) % len(cycle)]]
+        change -= matrix[vertex_a][cycle[index_a - 1]] + matrix[vertex_b][cycle[(index_b + 1) % len(cycle)]]
     # edge case explained in images/konce.png
-    if index_a == 0 and index_b == len(cycle) - 1:
+    elif index_a == 0 and index_b == len(cycle) - 1:
         change += matrix[vertex_a][cycle[index_b - 1]] + matrix[vertex_b][cycle[index_a + 1]]
         change -= matrix[vertex_a][cycle[index_a + 1]] + matrix[vertex_b][cycle[index_b - 1]]
     else:
