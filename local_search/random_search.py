@@ -4,7 +4,7 @@ import time
 import random
 
 
-def random_search(matrix, cycle_a, cycle_b, time_limit):
+def random_search(matrix, cycle_a, cycle_b, inside_swap, time_limit=1):
     random.seed()
     start = time.time()
     while time.time() - time_limit <= start:
