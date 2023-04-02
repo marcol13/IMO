@@ -4,7 +4,7 @@ import numpy as np
 from greedy_regret import greedy_regret
 from random_generator import random_generator
 from matrix import parse_file, create_distance_matrix
-from helpers import calculate_path_length, draw_cycles
+from helpers import calculate_path_length
 from steepest_search import steepest_search
 from greedy_search import greedy_search
 from random_search import random_search
@@ -17,7 +17,7 @@ KROB_PATH = "./local_search/data/krob100.tsp"
 
 if __name__ == "__main__":
 
-    vertices_kroa = parse_file(KROB_PATH)
+    vertices_kroa = parse_file(KROA_PATH)
     matrix = create_distance_matrix(vertices_kroa)
 
     # TODO add runs for unchanged solution
@@ -44,7 +44,7 @@ if __name__ == "__main__":
                     length_a, length_b = calculate_path_length(matrix, cycle_a), calculate_path_length(matrix, cycle_b)
                     lengths.append(length_a + length_b)
 
-                print(local_search.__name__, inside_swap)
+                print(generator.__name__, local_search.__name__, inside_swap)
                 print(f"Lenghts: {min(lengths)}, {np.mean(lengths)}, {max(lengths)}")
                 print(f"Times: {min(times)}, {np.mean(times)}, {max(times)}")
                 print(f"The best results for intial vertex {np.argmin(lengths)}")

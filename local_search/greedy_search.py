@@ -1,4 +1,5 @@
 import numpy as np
+import random
 import swap_operations as so
 from helpers import Improvement
 
@@ -17,6 +18,7 @@ def greedy_search(matrix, cycle_a, cycle_b, inside_swap):
     
     def between_cycles():
         pairs = so.get_pairs_for_swap_between_cycles(cycle_a, cycle_b)
+        random.shuffle(pairs)
         for i in range(len(pairs)):
             change = so.calculate_distance_diff_for_swap_between_cycles(matrix, cycle_a, cycle_b, pairs[i][0], pairs[i][1])  
             if change < 0:
@@ -30,6 +32,7 @@ def greedy_search(matrix, cycle_a, cycle_b, inside_swap):
         
     def check_cycle(cycle):
         pairs = so.get_pairs_for_swap_inside_cycle(cycle)
+        random.shuffle(pairs)
         for i in range(len(pairs)):
             change = distance_cal(matrix, cycle, pairs[i][0], pairs[i][1])  
             if change < 0:
@@ -42,7 +45,14 @@ def greedy_search(matrix, cycle_a, cycle_b, inside_swap):
         inside = inside_cycles()
         if between.change >= 0 and inside.change >= 0:
             break
-        if between.change < inside.change:
-            between.function(*between.args)
+        first_method = random.randint(1, 2)
+        if first_method == 1:
+            if between.change < 0:
+                between.function(*between.args)
+            else:
+                inside.function(*inside.args)
         else:
-            inside.function(*inside.args)
+            if inside.change < 0:
+                inside.function(*inside.args)
+            else:
+                between.function(*between.args)
