@@ -11,8 +11,8 @@ from random_search import random_search
 from tqdm import tqdm
 
 
-KROA_PATH = "./local_search/data/kroa100.tsp"
-KROB_PATH = "./local_search/data/krob100.tsp"
+KROA_PATH = "./data/kroa100.tsp"
+KROB_PATH = "./data/krob100.tsp"
 
 
 if __name__ == "__main__":
