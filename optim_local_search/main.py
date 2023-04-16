@@ -26,7 +26,7 @@ if __name__ == "__main__":
         times = []
         lengths = []
         best_cycles = None
-        for i in tqdm(range(10)):
+        for i in tqdm(range(100)):
             cycle_a, cycle_b = random_generator(matrix, vertices_kroa, i)
             cycle_a, cycle_b = cycle_a[:-1], cycle_b[:-1]
 
@@ -37,6 +37,8 @@ if __name__ == "__main__":
             length_a, length_b = calculate_path_length(matrix, cycle_a), calculate_path_length(matrix, cycle_b)
             
             if best_cycles == None or length_a + length_b < min(lengths):
+                cycle_a = np.append(cycle_a, cycle_a[0])
+                cycle_b = np.append(cycle_b, cycle_b[0])
                 best_cycles = (cycle_a, cycle_b)
 
             lengths.append(length_a + length_b)
