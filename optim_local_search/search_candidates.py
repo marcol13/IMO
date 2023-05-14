@@ -13,13 +13,16 @@ def search_candidates(matrix, cycle_a, cycle_b, k=10):
 
     N = len(matrix)
     cycles = deepcopy(cycles)
+    # find k closest vertices for each vertex
     closest = np.argpartition(matrix, k+1, axis=1)[:,:k+1]
     
     while True:
         best_move, best_delta = None, 0
         for a in range(N):
             for b in closest[a]:
-                if a == b: continue
+                if a == b: 
+                    continue
+                # find in which cycle and where are the vertices a and b
                 (c1, i), (c2, j) = find_node(cycles, a), find_node(cycles, b)
                 move, delta = None, None
                 if c1 == c2:

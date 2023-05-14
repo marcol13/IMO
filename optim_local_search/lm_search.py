@@ -14,7 +14,8 @@ def lm_search(matrix, cycle_a, cycle_b):
             n = len(cycle)
             for i, j in io.gen_swap_edge(n):
                 delta, a, b, c, d = io.gen_swap_edge_2(matrix, cycle, i, j)
-                if delta < 0: moves.append((delta, SWAP_EDGE, a, b, c, d))
+                if delta < 0: 
+                    moves.append((delta, SWAP_EDGE, a, b, c, d))
                 
         elif kind == SWAP_NODE:
             _, _, c1, c2, _, y1, _, _, y2, _ = move
@@ -22,10 +23,12 @@ def lm_search(matrix, cycle_a, cycle_b):
             n, m = len(cycles[c1]), len(cycles[c2])
             for k in range(m):
                 delta, move = io.make_swap_node(matrix, cycles, c1, i, c2, k)
-                if delta < 0: moves.append(move)
+                if delta < 0: 
+                    moves.append(move)
             for k in range(n):
                 delta, move = io.make_swap_node(matrix, cycles, c2, j, c1, k)
-                if delta < 0: moves.append(move)
+                if delta < 0: 
+                    moves.append(move)
                 
         return moves
 
@@ -49,9 +52,10 @@ def lm_search(matrix, cycle_a, cycle_b):
                     best_move = move
                     break
                 elif s1 == s2 == -1:
-                    to_delete.append(k)
-                    best_move = move[0], SWAP_EDGE, b, a, d, c
-                    break
+                    # to_delete.append(k)
+                    # best_move = move[0], SWAP_EDGE, b, a, d, c
+                    # break
+                    continue
             elif kind == SWAP_NODE:
                 _, _, c1, c2, x1, y1, z1, x2, y2, z2 = move
                 s1 = io.has_edge(cycles[c1], x1, y1)

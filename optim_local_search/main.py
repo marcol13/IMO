@@ -6,7 +6,7 @@ from random_generator import random_generator
 from helpers import calculate_path_length
 
 
-KROA_PATH = "./data/kroa100.tsp"
+KROA_PATH = "./data/krob200.tsp"
 KROB_PATH = "./data/krob100.tsp"
 
 

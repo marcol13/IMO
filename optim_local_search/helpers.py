@@ -42,9 +42,11 @@ def index(xs, e):
 
 def find_node(cycles, a):
     i = index(cycles[0], a)
-    if i is not None: return 0, i
+    if i is not None: 
+        return 0, i
     i = index(cycles[1], a)
-    if i is not None: return 1, i
+    if i is not None: 
+        return 1, i
     print(cycles)
     assert False, f'City {a} must be in either cycle'
     
@@ -55,8 +57,6 @@ def remove_at(xs, sorted_indices):
 def reverse(xs, i, j):
     n = len(xs)
     d = (j - i) % n
-    #print(d)
     for k in range(abs(d)//2+1):
         a, b = (i+k)%n, (i+d-k)%n
-        #print(a, '<->', b)
         xs[a], xs[b] = xs[b], xs[a]

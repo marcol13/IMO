@@ -35,7 +35,6 @@ def delta_swap_node(D, x1, y1, z1, x2, y2, z2):
 
 def make_swap_node(cities, cycles, cyc1, i, cyc2, j):
     C1, C2 = cycles[cyc1], cycles[cyc2]
-    D = cities
     n, m = len(C1), len(C2)
     x1, y1, z1 = C1[(i-1)%n], C1[i], C1[(i+1)%n]
     x2, y2, z2 = C2[(j-1)%m], C2[j], C2[(j+1)%m]
@@ -69,10 +68,12 @@ def init_moves(cities, cycles):
         n = len(cycle)
         for i, j in gen_swap_edge(n):
             delta, a, b, c, d = gen_swap_edge_2(cities, cycle, i, j)
-            if delta < 0: moves.append((delta, SWAP_EDGE, a, b, c, d))
+            if delta < 0: 
+                moves.append((delta, SWAP_EDGE, a, b, c, d))
     for i, j in gen_swap_node(len(cycles[0]), len(cycles[1])):
         delta, move = make_swap_node(cities, cycles, 0, i, 1, j)
-        if delta < 0: moves.append(move)
+        if delta < 0: 
+            moves.append(move)
     return moves
  
 
@@ -81,16 +82,12 @@ def apply_move(cycles, move):
     if kind == SWAP_EDGE:
         _, _, a, _, c, _ = move
         (c1, i), (c2, j) = find_node(cycles, a), find_node(cycles, c)
-        #print('swap edge', c1, i, c2, j, move[0])
-        #assert c1 == c2, 'Cannot swap edges between cycles'
         cycle = cycles[c1]
         n = len(cycle)
         reverse(cycle, (i+1)%n, j)
     elif kind == SWAP_NODE:
         _, _, c1, c2, _, a, _, _, b, _ = move
         i, j = list(cycles[c1]).index(a), list(cycles[c2]).index(b)
-        #print('swap node', c1, i, c2, j, move[0])
-        #assert c1 != c2, 'Cannot swap nodes in the same cycle'
         cycles[c1][i], cycles[c2][j] = cycles[c2][j], cycles[c1][i]
     else:
         assert False, 'Invalid move type'
