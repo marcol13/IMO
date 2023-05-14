@@ -10,12 +10,12 @@ def extend_cycle(cycle: np.ndarray, matrix: np.ndarray, free_vertices: np.ndarra
 
 def random_generator(matrix: np.ndarray, vertices: np.ndarray, start_ver: int = None, draw: bool = False):
     if start_ver is None:
-        start_ver_a = random.randint(0, 100)
+        start_ver_a = random.randint(0, len(vertices))
     else:
         start_ver_a = start_ver
     start_ver_b = np.argmax(matrix[:, start_ver_a])
 
-    free_vertices = np.ones(100)
+    free_vertices = np.ones(len(vertices))
     free_vertices[start_ver_a] = 0
     free_vertices[start_ver_b] = 0
 
